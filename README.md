@@ -3,8 +3,14 @@ Delivery Cube Common Module
 
 The Delivery Cube Common Module contains utility classes and components useful for all for ATG projects.
 
-* auto-gen TOC:
-{:toc}
+- [The Feature Toggles Project](#the-feature-toggles-project )
+    - [What Are Feature Toggles?](#about)
+    - [Get the Code](#get-the-code)
+    - [Build the Project](#build-the-project)
+        - [Add ATG Modules to Maven](#add-atg-modules-to-maven)
+    - [Using Feature Toggles](#using-feature-toggles)
+    - [Extending Feature Toggles](#extending-feature-toggles)
+
 
 # The Feature Toggles Project
 
