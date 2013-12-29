@@ -27,7 +27,7 @@ http://martinfowler.com/bliki/FeatureToggle.html
 
 Clone the repository with
 
-    git clone https://github.com/vihung/deliverycube-common.git
+    git clone https://github.com/deliverycube/deliverycube-common.git
     
 or click on the `Clone in Desktop` button or `Download ZIP` button to get a local copy.
 
