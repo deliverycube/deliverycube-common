@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Delivery Cube Common Module : A set of utility classes and components useful for all ATG projects" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Delivery Cube Common Module</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/deliverycube/deliverycube-common">View on GitHub</a>
+
+          <h1 id="project_title">Delivery Cube Common Module</h1>
+          <h2 id="project_tagline">A set of utility classes and components useful for all ATG projects</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/deliverycube/deliverycube-common/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/deliverycube/deliverycube-common/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="delivery-cube-common-module" class="anchor" href="#delivery-cube-common-module"><span class="octicon octicon-link"></span></a>Delivery Cube Common Module</h1>
+
+<p>The Delivery Cube Common Module contains utility classes and components useful for all for ATG projects.</p>
+
+<ul>
+<li>
+<a href="#the-feature-toggles-project">The Feature Toggles Project</a>
+
+<ul>
+<li><a href="#about">What Are Feature Toggles?</a></li>
+<li><a href="#get-the-code">Get the Code</a></li>
+<li>
+<a href="#build-the-project">Build the Project</a>
+
+<ul>
+<li><a href="#add-atg-modules-to-maven">Add ATG Modules to Maven</a></li>
+</ul>
+</li>
+<li><a href="#using-feature-toggles">Using Feature Toggles</a></li>
+<li><a href="#extending-feature-toggles">Extending Feature Toggles</a></li>
+</ul>
+</li>
+</ul><h1>
+<a name="the-feature-toggles-project" class="anchor" href="#the-feature-toggles-project"><span class="octicon octicon-link"></span></a>The Feature Toggles Project</h1>
+
+<p>The Feature Toggles module contains code and config for a Feature Toggle Service in ATG</p>
+
+<h2>
+<a name="what-are-feature-toggles" class="anchor" href="#what-are-feature-toggles"><span class="octicon octicon-link"></span></a>What Are Feature Toggles?</h2>
+
+<p>For a background on Feature Toggles, please read the article by Martin Fowler at 
+<a href="http://martinfowler.com/bliki/FeatureToggle.html">http://martinfowler.com/bliki/FeatureToggle.html</a></p>
+
+<h2>
+<a name="get-the-code" class="anchor" href="#get-the-code"><span class="octicon octicon-link"></span></a>Get the Code</h2>
+
+<p>Clone the repository with</p>
+
+<pre><code>git clone https://github.com/deliverycube/deliverycube-common.git
+</code></pre>
+
+<p>or click on the <code>Clone in Desktop</code> button or <code>Download ZIP</code> button to get a local copy.</p>
+
+<h2>
+<a name="build-the-project" class="anchor" href="#build-the-project"><span class="octicon octicon-link"></span></a>Build the Project</h2>
+
+<p>Go to the Feature Toggles project and build with Maven</p>
+
+<pre><code>cd .../path/to/deliverycube-common/feature-toggles
+mvn clean install
+</code></pre>
+
+<p>The resultant JAR contains both compiled classes and the appropriate config files, and so can be used as both the 
+classes JAR and your config JAR in your ATG module.</p>
+
+<h3>
+<a name="add-atg-modules-to-maven" class="anchor" href="#add-atg-modules-to-maven"><span class="octicon octicon-link"></span></a>Add ATG Modules to Maven</h3>
+
+<p>Note that you will need to have the ATG DAS module added to your Maven repository. 
+Please read the article at <a href="https://vihung.wordpress.com/2012/05/11/putting-atg-dependencies-in-maven/">https://vihung.wordpress.com/2012/05/11/putting-atg-dependencies-in-maven/</a> to find out more.</p>
+
+<h2>
+<a name="using-feature-toggles" class="anchor" href="#using-feature-toggles"><span class="octicon octicon-link"></span></a>Using Feature Toggles</h2>
+
+<p>This project provides a Feature Toggles service that can be used to define which features are toggles or not.</p>
+
+<p>In your own module, override the configuration for the <code>FeatureToggles</code> service component, and override the <code>features</code> 
+property along the lines below</p>
+
+<pre><code># /deliverycube/common/featuretoggles/FeatureToggles
+features=\
+    myFeature1=true,\
+    myFeature2=false,\
+    myFeature3=true
+</code></pre>
+
+<p>This sample above declares that <code>myFeature1</code> and <code>myFeature3</code> are enabled, whilst <code>myFeature2</code> is  explicitly disabled.</p>
+
+<p>For any feature that is not explicitly defined in the configuration, the service treats it as disabled. </p>
+
+<p>This service is a global component, and can be queried directly from code, along the lines of</p>
+
+<pre><code>if(getFeatureToggles().isFeatureToggled("myFeature1")) {
+    // code to execute if feature toggle is on
+} else {
+    // code to execute if feature toggle is off
+}
+</code></pre>
+
+<p>This project also provides a Feature Toggles Droplet that can be used within JSP pages to conditionally render HTML/JSP 
+code based on whether a feature is toggled.</p>
+
+<pre><code>&lt;dsp:droplet name="/deliverycube/common/featuretoggles/FeatureToggleDroplet"&gt;
+  &lt;dsp:param name="feature" value="myFeature1"/&gt;
+  &lt;dsp:oparam name="on"&gt;
+    &lt;!-- Content to render if the feature toggle is on --&gt;
+  &lt;/dsp:oparam&gt;
+  &lt;dsp:oparam name="off"&gt;
+    &lt;!-- Content to render if the feature toggle is off --&gt;
+  &lt;/dsp:oparam&gt;
+&lt;/dsp:droplet&gt;
+</code></pre>
+
+<h2>
+<a name="extending-feature-toggles" class="anchor" href="#extending-feature-toggles"><span class="octicon octicon-link"></span></a>Extending Feature Toggles</h2>
+
+<p>The Feature Toggles service implements a very simple interface - 
+<code>deliverycube.common.atg.featuretoggles.FeatureToggleService</code></p>
+
+<p>This requires a single method to be implemented</p>
+
+<pre><code>/**
+ * Determine the value of the feature toggle for the given feature.
+ * 
+ * @param pFeature
+ *            the feature
+ * @return the feature toggle - &lt;code&gt;true&lt;/code&gt; if on, &lt;code&gt;false&lt;/code&gt;
+ *         if off or unspecified.
+ */
+public abstract boolean isFeatureToggled(final String pFeature);
+</code></pre>
+
+<p>You can create your own implementation of the Feature Toggles service by implementing this interface.</p>
+
+<p>For example, you may want to create an implementation that uses a versioned repository to hold feature toggles. This 
+would allow you to enable or disable features at run-time by deploying new data from the BCC.    </p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Delivery Cube Common Module maintained by <a href="https://github.com/deliverycube">deliverycube</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
