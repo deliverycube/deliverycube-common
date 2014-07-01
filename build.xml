@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    ====================================================================== 
+    18 Jan 2012 05:51:46 
+    
+    Delivery Cube Common 
+    DeliveryCubeCommon Module 
+    
+    Vihung Marathe 
+    ====================================================================== 
+-->
+<project name="DeliveryCubeCommon" default="deploy">
+    <description>DeliveryCubeCommon ATG Module</description>
+
+    <!-- Load the build-specific properties -->
+    <property file="./build.properties" />
+
+    <property name="atg.home" location="${atg.root}/home" />
+    <property name="atg.module.name" value="${ant.project.name}" />
+    <property name="atg.module.root" location="${atg.root}/${atg.module.name}" />
+
+    <property name="src.main.manifest" location="./src/main/META-INF/MANIFEST.MF" />
+	
+    <property name="target.root" location="./target" />
+    <property name="target.manifest" location="./target/META-INF/MANIFEST.MF" />
+
+    <!-- 
+    ================================= 
+    target: clean 
+    ================================= 
+    -->
+    <target name="clean" depends="undeploy, unbuild" description="Undo the effects of a build" />
+
+    <!-- 
+    ================================= 
+    target: deploy 
+    ================================= 
+    -->
+    <target name="deploy" depends="build" description="Deploy the module to the local ATG instance">
+        <mkdir dir="${atg.module.root}" description="Create the ATG Module directory if it does not exist" />
+
+        <copy todir="${atg.module.root}">
+            <fileset dir="${target.root}">
+                <include name="**/*" />
+                <exclude name="classes/**" />
+                <exclude name="*.jar" />            	
+                <exclude name="test-classes/**" />
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: undeploy                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="undeploy">
+        <delete dir="${atg.module.root}" />
+    </target>
+
+    <!-- 
+      - - - - - - - - - - - - - - - - - 
+      target: build 
+      - - - - - - - - - - - - - - - - - 
+    -->
+    <target name="build" depends="init" description="Assemble the ATG Module from the source artifacts">
+        <!-- Copy the module manifest to the target directory -->
+        <copy tofile="${target.manifest}" file="${src.main.manifest}" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: unbuild                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="unbuild">
+        <delete file="${target.manifest}" />
+    </target>
+
+    <target name="rebuild" depends="unbuild, build" />
+
+    <!-- 
+      - - - - - - - - - - - - - - - - - 
+      target: init 
+      - - - - - - - - - - - - - - - - - 
+    -->
+    <target name="init" description="Initialise the environment">
+    </target>
+</project>
+
