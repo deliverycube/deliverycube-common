@@ -46,8 +46,8 @@
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
 			<configuration>
-				<source>1.5</source>
-				<target>1.5</target>
+				<source>1.6</source>
+				<target>1.6</target>
 			</configuration>
 		</plugin>
 	</plugins>
@@ -58,7 +58,7 @@
       <dependency>
           <groupId>ATG</groupId>
           <artifactId>DAS</artifactId>
-          <version>[9.4,]</version>
+          <version>10.0.3</version>
           <type>pom</type>
           <scope>provided</scope>
       </dependency>
