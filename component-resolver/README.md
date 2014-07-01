@@ -61,3 +61,16 @@ This project provides a Component Resolver interface, and two implementations of
 The DynamoComponentResolver implementation uses the Dynamo Request and ATG's internal mechanism to resolve components. This brings with it a compile-time dependency on DAS classes. 
 
 The JndiComponentResolver implementation uses JNDI. This does not have any compile-time dependency on ATG classes.
+
+For example, from a Spring project, you can create a Profile Resolver component that gives your Spring objects a handle to the ATG user profile, like so
+
+    <bean id="profileResolver"
+      class="deliverycube.common.atg.componentresolver.jndi.JndiComponentResolver">
+        <property name="componentName" value="/atg/userprofiling/Profile"/>
+    </bean>  
+
+and then, in your non-ATG class
+
+    Profile userProfile = (Profile) profileResolver.resolveComponent();
+    
+will give you a the customer Profile object.
