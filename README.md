@@ -49,7 +49,7 @@ Please read the article at https://vihung.wordpress.com/2012/05/11/putting-atg-d
 
 ## Using Feature Toggles
 
-This project provides a Feature Toggles service that can be used to define which features are toggles or not.
+This project provides a Feature Toggles service that can be used to define which features are toggled and which are not.
 
 In your own module, override the configuration for the `FeatureToggles` service component, and override the `features` 
 property along the lines below
@@ -105,5 +105,4 @@ This requires a single method to be implemented
 
 You can create your own implementation of the Feature Toggles service by implementing this interface.
 
-For example, you may want to create an implementation that uses a versioned repository to hold feature toggles. This 
-would allow you to enable or disable features at run-time by deploying new data from the BCC.    
+For example, you may want to create an implementation that uses a versioned repository to hold feature toggles. This would allow you to enable or disable features at run-time by deploying new data from the BCC.    
