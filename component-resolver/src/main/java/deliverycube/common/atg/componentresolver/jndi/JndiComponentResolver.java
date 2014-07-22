@@ -38,18 +38,18 @@ public class JndiComponentResolver implements ComponentResolver {
      */
     @Override
     public Object resolveComponent() throws UnknownComponentException {
+        if (log.isDebugEnabled()) log.debug("Invoked. componentName=" + mComponentName);
         if (StringUtils.isEmpty(mComponentName)) throw new IllegalArgumentException("No componentName set");
 
-        if (log.isDebugEnabled()) log.debug("componentName=" + mComponentName);
         final String jndiName = "dynamo:" + mComponentName;
-        if (log.isDebugEnabled()) log.debug("jndiName=" + jndiName);
+        if (log.isTraceEnabled()) log.trace("jndiName=" + jndiName);
 
         try {
             final Context ctx = new javax.naming.InitialContext();
 
             final Object component = ctx.lookup(jndiName);
-            if (log.isDebugEnabled()) log.debug("resolveComponent(): component=" + component);
-            if (log.isDebugEnabled()) log.debug("resolveComponent(): component.class=" + component.getClass().getName());
+            if (log.isTraceEnabled()) log.trace("resolveComponent(): component=" + component);
+            if (log.isTraceEnabled()) log.trace("resolveComponent(): component.class=" + component.getClass().getName());
 
             if (component == null) {
                 throw new UnknownComponentException("Component: " + jndiName + " could not be resolved");
