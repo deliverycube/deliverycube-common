@@ -65,5 +65,18 @@
       <url>http://devsvc3.deliverycube.com/artifactory/libs-snapshot-local</url>
     </snapshotRepository>
   </distributionManagement>
+
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>devsvc3.deliverycube.com</name>
+      <url>http://devsvc3.deliverycube.com/artifactory/libs-release-local</url>
+    </repository>
+    <repository>
+      <id>snapshots</id>
+      <name>devsvc3.deliverycube.com-snapshots</name>
+      <url>http://devsvc3.deliverycube.com/artifactory/libs-snapshot-local</url>
+    </repository>
+  </repositories>
   
 </project>
