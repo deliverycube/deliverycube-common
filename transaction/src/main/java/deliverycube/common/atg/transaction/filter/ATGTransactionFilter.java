@@ -27,6 +27,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.TransactionManager;
 
 import org.apache.log4j.Logger;
@@ -97,9 +98,25 @@ public class ATGTransactionFilter implements Filter {
                 // Begin a transaction with the selected propagation level
                 td.begin(transactionManager, mPropagationLevel);
 
+                // Wrap the response with so as to be able to extract the status code
+                StatusResponseWrapper response = new StatusResponseWrapper((HttpServletResponse) pResponse);
+
                 // Send the request down the chain
-                pFilterChain.doFilter(pRequest, pResponse);
-                success = true;
+                pFilterChain.doFilter(pRequest, response);
+
+                final int status = response.getStatus();
+
+                // 1xx Response Codes should never be returned, but indicate success
+                // 2xx Response Codes indicate success
+                // 3xx Response Codes indicate success, from the point of view of a transaction
+                if (100 <= status && status <= 399) {
+                    success = true;
+                }
+                // 4xx Response Codes indicate failure
+                // 5xx Response Codes indicate failure
+                else if (400 <= status && status <= 599) {
+                    success = false;
+                }
             } catch (TransactionDemarcationException e) {
                 log.error(e.getMessage(), e);
                 success = false;
