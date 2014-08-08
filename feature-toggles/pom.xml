@@ -62,4 +62,18 @@
           <scope>provided</scope>
       </dependency>
   </dependencies>
+  
+  <distributionManagement>
+    <repository>
+      <id>central</id>
+      <name>devsvc3.deliverycube.com</name>
+      <url>http://devsvc3.deliverycube.com/artifactory/libs-release-local</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <name>devsvc3.deliverycube.com-snapshots</name>
+      <url>http://devsvc3.deliverycube.com/artifactory/libs-snapshot-local</url>
+    </snapshotRepository>
+  </distributionManagement>
+  
 </project>
